@@ -14,9 +14,11 @@ It also allows you to generate the _spatial_ distribution of null test statistic
 
 If you've generated a group-level model with FEAT, you have all the information you need to run Randomise on Harvard's supercomputing cluster. At it's simplest, all you need to do is `sbatch` the `run_randomise_tfce.bash` script with your gfeat directory. The script copies the files specifying first-level model locations, contrasts, covariates, and group-dependence structure to the directory you're running the script from, and runs Randomise using 10,000 permutations. It might take a day to run, but at the end you get a pretty robust set of results.
 
-## Usage
+## Usage: Randomise and TFCE
 
 (Assuming you're logged into ncf...)
+
+_Note well:_ The default is to run 10,000 permutations; this is done for each and every contrast you've requested. You can hack in some parallelization if you split up your contrasts between different design files (I assume---I havedn't tried it yet).
 
 1. Clone this repository to your home directory, or wherever you keep your code: `git clone https://github.com/stressdev/randomise_tfce_helpers`
 2. Copy the bash script to the directory you want to store the results: `cd randomise_tfce_helpers; cp run_randomise_tfce.bash ~/folder/where/your/results/go`
@@ -24,6 +26,27 @@ If you've generated a group-level model with FEAT, you have all the information 
 4. Run the script, providing one argument specifying the location of your group-level FEAT: `sbatch run_randomise_tfce.bash /directory/holding/your/experiment.gfeat/`
 
 The script loads FSL, set's the mask to FSL's MNI152_T1_2mm_brain.nii.gz (which you can change if you need), copies the necessary `design.*` files, pulls the first level model names from `design.fsf`, creates a 4d NIFITI from those first-level models and runs Randomise requesting `-n 10000` permutations and TFCE (`-T`) output.
+
+## Usage: Thresholding and reporting clusters
+
+The script `threshold_and_cluster.bash` is there to help you threshold your raw _t_-statistic image using the TFCE _p_-value image, which is really useful if you've requested a lot of contrasts.
+
+To run it, simply execute: `bash threshold_and_cluster.bash` in the directory your TFCE images are. All it does is search that directory for all files that match `"*tfce_corrp_tstat*"`, reconstructs the _t_-statistic filename, uses `fslmaths` to compute a new thresholded _t_-statistic image named `*tstat*_thresh.nii.gz`, and then runs `cluster` to get various cluster output.
+
+# Outputs
+
+**run_randomise_tfce.bash**
+
+`*tfce_corrp_tstat*.nii.gz` TFCE 1-_p_ images
+`*tstat*.nii.gz` Raw _t_-statistic images
+
+**threshold_and_cluster.bash**
+
+`*tstat*_thresh.nii.gz` Thresholded _t_-statistic image
+`*tstat*_cluster_index.nii.gz` Cluster index image
+`*tstat*_cluster_size.nii.gz` Cluster size image
+`*tstat*_lmax.txt` Local maxima text file
+`*tstat*_clusters.txt` Clusters table
 
 # Learn more
 
