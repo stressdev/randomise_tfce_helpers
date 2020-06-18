@@ -37,15 +37,15 @@ To run it, simply execute: `bash threshold_and_cluster.bash` in the directory yo
 
 **run_randomise_tfce.bash**
 
-`*tfce_corrp_tstat*.nii.gz` TFCE 1-_p_ images
+`*tfce_corrp_tstat*.nii.gz` TFCE 1-_p_ images  
 `*tstat*.nii.gz` Raw _t_-statistic images
 
 **threshold_and_cluster.bash**
 
-`*tstat*_thresh.nii.gz` Thresholded _t_-statistic image
-`*tstat*_cluster_index.nii.gz` Cluster index image
-`*tstat*_cluster_size.nii.gz` Cluster size image
-`*tstat*_lmax.txt` Local maxima text file
+`*tstat*_thresh.nii.gz` Thresholded _t_-statistic image  
+`*tstat*_cluster_index.nii.gz` Cluster index image  
+`*tstat*_cluster_size.nii.gz` Cluster size image  
+`*tstat*_lmax.txt` Local maxima text file  
 `*tstat*_clusters.txt` Clusters table
 
 # Learn more
