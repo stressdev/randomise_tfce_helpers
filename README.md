@@ -4,6 +4,8 @@ Want to get started with threshold free cluster enhancment using FSL's Randomise
 
 First, read the [user guide](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide). When you're done, return here.
 
+**_Note_**: TFCE is a one-sided procedure. This means that you should specify *t*/*Z*-contrasts and their inverse (e.g., `A - B` and `B - A`) if you want to test two-sided hypotheses. The thresholding script assumes that you will be testing two-sided hypotheses and so uses a cutoff of `1 - 0.025 = 0.975`.
+
 # Why use Randomise and TFCE?
 
 Permutation testing allows you to relax the assumptions underlying the parametric models used by FEAT/FLAME to derive _p_-values and test statistics. Randomise generates a null distribution from the data you have by mixing it up so that the expected association between your independent and dependent variables is 0. This allows you to derive a _p_-value that is not invalidated by violations of the parametric assumptions of other models. It is almost always the case that if the _p_-value differs between the parametric null and the permutation null distribution, it's the permutation distribution that is the correct reference. This means more confidence in the statistic, and often times greater statistical power
