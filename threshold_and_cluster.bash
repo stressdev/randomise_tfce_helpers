@@ -16,7 +16,7 @@ for t in $thresh; do
 	clusterout=${tstat%.nii.gz}_clusters.txt
 	echo "Thresholding $tstat using $t..."
 	echo "Output: $threshed"
-	fslmaths "${t}" -thr 0.95 -bin -mul "${tstat}" "${threshed}"
+	fslmaths "${t}" -thr 0.975 -bin -mul "${tstat}" "${threshed}" #0.975 for two-sided tests
 	cluster --in=$threshed --thresh=0.0001 --oindex=$clustindex --olmax=$lmax --osize=$clustsize > $clusterout
 done
 
