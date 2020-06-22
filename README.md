@@ -4,7 +4,10 @@ Want to get started with threshold free cluster enhancment using FSL's Randomise
 
 First, read the [user guide](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide). When you're done, return here.
 
-**_Note_**: TFCE is a one-sided procedure. This means that you should specify *t*/*Z*-contrasts and their inverse (e.g., `A - B` and `B - A`) if you want to test two-sided hypotheses. The thresholding script assumes that you will be testing two-sided hypotheses and so uses a cutoff of `1 - 0.025 = 0.975`.
+# Helpful notes:
+
+1. TFCE is a one-sided procedure. This means that you should specify *t*/*Z*-contrasts and their inverse (e.g., `A - B` and `B - A`) if you want to test two-sided hypotheses. The thresholding script assumes that you will be testing two-sided hypotheses and so uses a cutoff of `1 - 0.025 = 0.975`. In other words, the negative contrast has a false-positive error rate of 2.5%, as does the positive contrast, for a total error rate of the usual 5%. If your hypothesis is really one-sided, you should adjust this to .95.
+2. Randomise runs all *N* permutations for every contrast that is defined in `design.con` (because of how it deals with covariates). This means that if there are some contrasts you know you won't interpret, there's no reason to include them. That said, these permutatons don't take very long, and since they're running on the cluster, you shouldn't need to worry too much about it. Just make sure the sbatch file requests enough time. In one example run, with 10,000 permutations for each of 8 contrasts, the total wall-time was 18.5 hours, with 1.3 G maximum memory used. The defaults for the `sbatch` script are based on these numbers, but yours may vary.
 
 # Why use Randomise and TFCE?
 
