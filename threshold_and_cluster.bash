@@ -17,6 +17,6 @@ for t in $thresh; do
 	echo "Thresholding $tstat using $t..."
 	echo "Output: $threshed"
 	fslmaths "${t}" -thr 0.975 -bin -mul "${tstat}" "${threshed}" #0.975 for two-sided tests
-	cluster --in=$threshed --thresh=0.0001 --oindex=$clustindex --olmax=$lmax --osize=$clustsize > $clusterout
+	cluster --in=$threshed --thresh=0.0001 --oindex=$clustindex --olmax=$lmax --osize=$clustsize --mm > $clusterout
 done
 
