@@ -49,7 +49,7 @@ To run it, simply execute: `bash threshold_and_cluster.bash` in the directory yo
 
 `*tstat*_thresh.nii.gz` Thresholded _t_-statistic image (for figure-making, need to find min - see below)
 `*tstat*_cluster_index.nii.gz` Cluster index image (intensities = # referring to that cluster)
-`*tstat*_cluster_size.nii.gz` Cluster size image (intensities = # vox in that cluster)
+`*tstat*_cluster_size.nii.gz` Cluster size image (intensities = # vox in that cluster)  
 `*tstat*_lmax.txt` Local maxima text file  
 `*tstat*_clusters.txt` Clusters table (for reporting in tables)
 
