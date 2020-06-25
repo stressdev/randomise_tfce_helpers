@@ -47,13 +47,21 @@ To run it, simply execute: `bash threshold_and_cluster.bash` in the directory yo
 
 **threshold_and_cluster.bash**
 
-`*tstat*_thresh.nii.gz` Thresholded _t_-statistic image  
-`*tstat*_cluster_index.nii.gz` Cluster index image  
-`*tstat*_cluster_size.nii.gz` Cluster size image  
+`*tstat*_thresh.nii.gz` Thresholded _t_-statistic image (for figure-making, need to find min - see below)
+`*tstat*_cluster_index.nii.gz` Cluster index image (intensities = # referring to that cluster)
+`*tstat*_cluster_size.nii.gz` Cluster size image (intensities = # vox in that cluster)  
 `*tstat*_lmax.txt` Local maxima text file  
-`*tstat*_clusters.txt` Clusters table
+`*tstat*_clusters.txt` Clusters table (for reporting in tables)
+
+
+# Figures
+
+TFCE does not result in clean, consistent p-value minimum values for voxels across maps; this will change for every map. For best, consistent figures, set the min equal to the min intensity value of that given map (it likely will not automatically populate). To find that value, run:
+`3dBrickStat -min -non-zero *thresh.nii.gz`
+
+Depending on your program, you may need to specify a max value. You can find that with the -max flag instead of -min, but this throws the coloring off in some programs and your best bet may be a value that is twice your min.
+
 
 # Learn more
 
 For more details about options and how to interpret the output, see the Randomise [user guide](https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Randomise/UserGuide).
-
