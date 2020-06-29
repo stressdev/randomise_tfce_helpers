@@ -61,7 +61,7 @@ do
 			echo "  for the script to find or create the 4d cope is required."
 			echo "  "
 			echo "  Usage:"
-			echo "    bash script.bash [options]"
+			echo "    sbatch script.bash [options]"
 			echo "  "
 			echo "  Options are:"
 			echo "    -h                              Show this message."
