@@ -13,7 +13,15 @@
 #SEE THE HELP TEXT BELOW OR BY RUNNING
 #  bash thisscriptname.bash -h
 #
+#THE ONE EXCEPTION ARE THE MODULES LOADED HERE:
 set -e
+if [ -z "$dryrun" ]; then
+	echo "Loading FSL"
+	module load centos6/0.0.1-fasrc01  ncf/1.0.0-fasrc01 fsl/6.0.2-ncf
+fi
+echo "Executing in $(pwd)"
+###
+
 gfeatdir=""
 copenumber=""
 analysis=""
@@ -23,13 +31,14 @@ onesample=""
 outpre="randomise"
 NPERM=10000
 mask="${FSLDIR}/data/standard/MNI152_T1_2mm_brain.nii.gz"
+firstlevel4d=""
 
 if [ $# -eq 0 ]; then
 	echo "No arguments supplied. Run this script with -h for help."
 	exit 1
 fi
 
-while getopts ":g:c:f:m:p:hn1" flag
+while getopts ":g:c:f:m:p:o:hn1" flag
 do
 	case "${flag}" in
 		h )
@@ -93,7 +102,7 @@ do
 			;;
 		p )
 			NPERM=${OPTARG}
-			if [[ ! $NPERM =~ ^[0-9]$ ]]; then 
+			if [[ ! $NPERM =~ ^[0-9]+$ ]]; then 
 				echo "ERROR: $NPERM is not a valid integer"
 				exit 1
 			fi
@@ -119,13 +128,6 @@ do
 done
 shift $((OPTIND -1))
 
-if [ -z "$dryrun" ]; then
-	echo "Loading FSL"
-#	module load centos6/0.0.1-fasrc01  ncf/1.0.0-fasrc01 fsl/6.0.2-ncf
-fi
-echo "Executing in $(pwd)"
-
-firstlevel4d=""
 if [ $cope4d ]; then
 	echo "Using user specified 4d file for input: ${cope4d}"
 	firstlevel4d=${cope4d};
