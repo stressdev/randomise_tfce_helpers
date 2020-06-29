@@ -23,14 +23,14 @@ If you've generated a group-level model with FEAT, you have all the information 
 
 (Assuming you're logged into ncf...)
 
-_Note well:_ The default is to run 10,000 permutations; this is done for each and every contrast you've requested. You can hack in some parallelization if you split up your contrasts between different design files (I assume---I havedn't tried it yet).
+_Note well:_ The default is to run 10,000 permutations; this is done for each and every contrast you've requested.
 
 1. Clone this repository to your home directory, or wherever you keep your code: `git clone https://github.com/stressdev/randomise_tfce_helpers`
 2. Copy the bash script to the directory you want to store the results: `cd randomise_tfce_helpers; cp run_randomise_tfce.bash ~/folder/where/your/results/go`
 3. Travel to the results directory and edit the script if you want to change some of the options. If you expect the process to take a long time, for example, increase the allowed time at the top of the script (e.g., change `#SBATCH --time=1-00:00:00` to `#SBATCH --time=5-00:00:00` if you think it might take 5 days to run): `cd ~/folder/where/your/results/go; nano run_randomise_tfce.bash`
-4. Run the script, providing one argument specifying the location of your group-level FEAT: `sbatch run_randomise_tfce.bash /directory/holding/your/experiment.gfeat/`
+4. Run the script, providing necessary arguments. For help, run: `bash run_randomise_tfce.bash -h`. For a typical run, you only need to supply a single argument, which is the group-level feat directory like: `sbatch run_randomise_tfce.bash -g /path/to/group.feat`.
 
-The script loads FSL, set's the mask to FSL's MNI152_T1_2mm_brain.nii.gz (which you can change if you need), copies the necessary `design.*` files, pulls the first level model names from `design.fsf`, creates a 4d NIFITI from those first-level models and runs Randomise requesting `-n 10000` permutations and TFCE (`-T`) output.
+If your `design.con` and `design.mat` are set up to include a one-sample *t*-test, randomise will appropriately handle this case. However, you can also explicitly ask for a one-sample *t*-test using the first-level files specified in the `design.fsf` file, or in a user-suipplied 4d NIFTI.
 
 ## Usage: Thresholding and reporting clusters
 
