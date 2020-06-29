@@ -155,7 +155,7 @@ elif [ $gfeatdir ]; then
 	if [ $dryrun ]; then
 		echo fslmerge -t first_level4d.nii.gz ${inputs}
 	else
-		fslmerge -t ${firstlevel4d} ${inputs}
+		srun -c 1 fslmerge -t ${firstlevel4d} ${inputs}
 	fi
 	echo "Done."
 else
@@ -174,13 +174,13 @@ if [ -z $onesample ]; then
 	if [ $dryrun ]; then
 		echo randomise -i ${firstlevel4d} -o ${outpre} -d design.mat -t design.con -e design.grp -m "${mask}" -n $NPERM -T
 	else
-		randomise -i ${firstlevel4d} -o ${outpre} -d design.mat -t design.con -e design.grp -m "${mask}" -n ${NPERM} -T
+		srun -c 1 randomise -i ${firstlevel4d} -o ${outpre} -d design.mat -t design.con -e design.grp -m "${mask}" -n ${NPERM} -T
 	fi
 else
 	if [ $dryrun ]; then
 		echo randomise -i ${firstlevel4d} -o ${outpre} -1 -m "${mask}" -n ${NPERM} -T
 	else
-		randomise -i ${firstlevel4d} -o ${outpre} -1 -m "${mask}" -n ${NPERM} -T
+		srun -c 1 randomise -i ${firstlevel4d} -o ${outpre} -1 -m "${mask}" -n ${NPERM} -T
 	fi
 fi
 
