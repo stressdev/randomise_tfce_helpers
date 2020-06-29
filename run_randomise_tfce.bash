@@ -13,14 +13,9 @@
 #SEE THE HELP TEXT BELOW OR BY RUNNING
 #  bash thisscriptname.bash -h
 #
-#THE ONE EXCEPTION ARE THE MODULES LOADED HERE:
+#THE ONE EXCEPTION ARE THE MODULES LOADED BELOW >>>
 set -e
-if [ -z "$dryrun" ]; then
-	echo "Loading FSL"
-	module load centos6/0.0.1-fasrc01  ncf/1.0.0-fasrc01 fsl/6.0.2-ncf
-fi
 echo "Executing in $(pwd)"
-###
 
 gfeatdir=""
 copenumber=""
@@ -127,6 +122,13 @@ do
 	esac
 done
 shift $((OPTIND -1))
+if [ -z "$dryrun" ]; then
+	echo "Loading FSL"
+###########################################################################
+# EDIT HERE IF YOU NEED TO LOAD A DIFFERENT VERSION OF FSL                #
+	module load centos6/0.0.1-fasrc01  ncf/1.0.0-fasrc01 fsl/6.0.2-ncf
+###########################################################################	
+fi
 
 if [ $cope4d ]; then
 	echo "Using user specified 4d file for input: ${cope4d}"
@@ -168,7 +170,7 @@ if [ -z $onesample ]; then
 	cp -v "${gfeatdir}/design.mat" ./
 	echo "Contrasts are:"
 	cat design.con
-	echo "Running Randomise (${NPERMS} per contrast)..."
+	echo "Running Randomise (${NPERM} per contrast)..."
 	if [ $dryrun ]; then
 		echo randomise -i ${firstlevel4d} -o ${outpre} -d design.mat -t design.con -e design.grp -m "${mask}" -n $NPERM -T
 	else
