@@ -130,6 +130,10 @@ if [ -z "$dryrun" ]; then
 ###########################################################################	
 fi
 
+if [ -z "$mask" ]; then
+        mask="${FSLDIR}/data/standard/MNI152_T1_2mm_brain.nii.gz"
+fi
+
 if [ $cope4d ]; then
 	echo "Using user specified 4d file for input: ${cope4d}"
 	firstlevel4d=${cope4d};
